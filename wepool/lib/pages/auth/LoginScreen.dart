@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:wepool/pages/auth/CreateAccountScreen.dart';
 import 'package:wepool/pages/auth/ForgetPasswordScreen.dart';
+import 'package:wepool/pages/auth/OnboardingScreen.dart';
 import 'package:wepool/utils/colors.dart';
 import 'package:wepool/widgets/global/GlobalOutlinEditText.dart';
 
@@ -173,12 +175,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                 fontWeight: FontWeight.w500,
                                 color: Colors.black),
                           ),
-                          Text(
-                            " Register Now",
-                            style: GoogleFonts.poppins(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.primary),
+                          GestureDetector(
+                            onTap:() {
+                              Navigator.pushAndRemoveUntil(context,
+                                  MaterialPageRoute(builder: (context) => CreateAccountScreen()),
+                                    (route) => false);
+                            },
+                            child: Text(
+                              " Register Now",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.primary),
+                            ),
                           ),
                         ],
                       ),

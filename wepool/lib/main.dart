@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Poppins'
       ),
       // home: PreSignupScreen(), // Set PreSignupScreen as the home screen
-      home: LoginScreen(), // Set PreSignupScreen as the home screen
+      home: PreSignupScreen(), // Set PreSignupScreen as the home screen
     );
   }
 }

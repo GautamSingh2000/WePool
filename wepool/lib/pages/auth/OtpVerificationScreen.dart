@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:wepool/utils/colors.dart';
@@ -7,7 +8,8 @@ import 'PrePasswordResetScreen.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
   final String email;
-  const OtpVerificationScreen({super.key, required this.email});
+  final Widget? route;
+  const OtpVerificationScreen({super.key, required this.email, this.route});
 
   @override
   State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
@@ -55,8 +57,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) =>
-                  PrePasswordResetScreen())); // Replace with API call
+              builder: (context) => widget.route != null ? widget.route! : PrePasswordResetScreen(),)); // Replace with API call
     } else {
       print("Please enter a 4-digit OTP");
     }

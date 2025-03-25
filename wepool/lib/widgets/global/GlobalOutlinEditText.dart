@@ -7,6 +7,7 @@ class GlobalOutlineEditText extends StatefulWidget {
   final TextInputType keyboardType;
   final String? Function(String?)? validator;
   final bool obscureText;
+  final Widget? suffixIcon; // 👈 Added suffixIcon parameter
 
   const GlobalOutlineEditText({
     super.key,
@@ -15,6 +16,7 @@ class GlobalOutlineEditText extends StatefulWidget {
     this.keyboardType = TextInputType.text,
     this.validator,
     this.obscureText = false,
+    this.suffixIcon, // 👈 Optional suffix icon
   });
 
   @override
@@ -43,17 +45,17 @@ class _GlobalOutlineEditTextState extends State<GlobalOutlineEditText> {
         // Borders
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: AppColors.borderGray01),
-          borderRadius: BorderRadius.all(Radius.circular(8)),
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: AppColors.primary, width: 2),
-          borderRadius: BorderRadius.all(Radius.circular(8)),
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
         ),
-        errorBorder: OutlineInputBorder(
+        errorBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: Colors.red, width: 2),
           borderRadius: BorderRadius.all(Radius.circular(8)),
         ),
-        focusedErrorBorder: OutlineInputBorder(
+        focusedErrorBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: Colors.red, width: 2),
           borderRadius: BorderRadius.all(Radius.circular(8)),
         ),
@@ -75,7 +77,7 @@ class _GlobalOutlineEditTextState extends State<GlobalOutlineEditText> {
             });
           },
         )
-            : null, // No icon for non-password fields
+            : widget.suffixIcon, // 👈 If not a password field, use provided suffixIcon
       ),
       validator: widget.validator,
     );

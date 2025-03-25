@@ -41,9 +41,10 @@ class _PreSignupScreenState extends State<PreSignupScreen> {
         });
       });
     } else {
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => LoginScreen()), // ✅ Fix: Correct syntax
+        MaterialPageRoute(builder: (context) => LoginScreen()),
+            (route) => false,// ✅ Fix: Correct syntax
       );
     }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:wepool/pages/auth/LoginScreen.dart';
 
 import '../../utils/colors.dart';
 import '../../widgets/global/GlobalOutlinEditText.dart';
@@ -32,13 +33,13 @@ class _SetNewPasswordScreenState extends State<SetNewPasswordScreen> {
             _isSuccess
                 ? SuccessMessageWidget(
                   // Show success message if _isSuccess is true
-                  title: "Successful",
-                  message:
-                      "Congratulations! Your password has been changed. Click continue to login.",
                   onPressed: () {
-                    Navigator.pushReplacementNamed(
+                    Navigator.pushAndRemoveUntil(
                       context,
-                      "/login",
+                      MaterialPageRoute(
+                        builder: (context) => LoginScreen(),
+                      ),
+                          (route) => false,
                     ); // Navigate to login
                   },
                 )
@@ -135,6 +136,9 @@ class _SetNewPasswordScreenState extends State<SetNewPasswordScreen> {
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
                                   // Proceed with login
+                                  setState(() {
+                                    _isSuccess = true;
+                                  });
                                 }
                               },
                               style: ElevatedButton.styleFrom(

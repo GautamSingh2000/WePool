@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
+import 'package:wepool/utils/colors.dart';
 
 class SuccessMessageWidget extends StatelessWidget {
-  final String title;
-  final String message;
   final VoidCallback onPressed;
 
   const SuccessMessageWidget({
     Key? key,
-    required this.title,
-    required this.message,
     required this.onPressed,
   }) : super(key: key);
 
@@ -35,26 +33,13 @@ class SuccessMessageWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             /// ✅ Success Icon
-            Container(
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.green,
-              ),
-              padding: const EdgeInsets.all(12),
-              child: const Icon(
-                Icons.check,
-                color: Colors.white,
-                size: 30,
-              ),
-            ),
-            const SizedBox(height: 16),
-
+           Lottie.asset('asset/anim/done_animation.json',repeat: true,height: 62 ,width: 62),
             /// 🎉 Title
             Text(
-              title,
+              "Successful",
               style: GoogleFonts.poppins(
                 fontSize: 18,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w500,
                 color: Colors.black,
               ),
             ),
@@ -62,11 +47,11 @@ class SuccessMessageWidget extends StatelessWidget {
 
             /// 📜 Message
             Text(
-              message,
+              "Congratulations! Your password has \n been changed. Click continue to login",
               textAlign: TextAlign.center,
               style: GoogleFonts.poppins(
-                fontSize: 14,
-                color: Colors.grey[700],
+                fontSize: 16,
+                color: AppColors.gray001,
               ),
             ),
             const SizedBox(height: 16),
