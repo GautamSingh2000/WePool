@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:wepool/pages/auth/LoginScreen.dart';
 import 'package:wepool/pages/auth/OtpVerificationScreen.dart';
+import 'package:wepool/pages/GlobalScreen.dart';
 import 'package:wepool/utils/colors.dart';
 
 import '../../widgets/global/GlobalOutlinEditText.dart';
@@ -211,7 +212,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           Navigator.push(context, MaterialPageRoute(builder: (context) =>
-                              OtpVerificationScreen(email: widget.email, route: LoginScreen())));
+                              OtpVerificationScreen(email: widget.email, route: GlobalScreen())));
                         }
                       },
                       style: ElevatedButton.styleFrom(

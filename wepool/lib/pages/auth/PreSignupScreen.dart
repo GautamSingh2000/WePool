@@ -9,6 +9,7 @@ class PreSignupScreen extends StatefulWidget {
 }
 
 class _PreSignupScreenState extends State<PreSignupScreen> {
+
   int _currentIndex = 0;
   double _opacity = 1.0;
 
@@ -52,6 +53,9 @@ class _PreSignupScreenState extends State<PreSignupScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     final currentData = onboardingData[_currentIndex];
 
     return Scaffold(

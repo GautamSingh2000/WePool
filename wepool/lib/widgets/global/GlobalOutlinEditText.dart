@@ -7,7 +7,8 @@ class GlobalOutlineEditText extends StatefulWidget {
   final TextInputType keyboardType;
   final String? Function(String?)? validator;
   final bool obscureText;
-  final Widget? suffixIcon; // 👈 Added suffixIcon parameter
+  final Widget? suffixIcon;
+  final Widget? prefixIcon; // 👈 Added prefixIcon parameter
 
   const GlobalOutlineEditText({
     super.key,
@@ -16,7 +17,8 @@ class GlobalOutlineEditText extends StatefulWidget {
     this.keyboardType = TextInputType.text,
     this.validator,
     this.obscureText = false,
-    this.suffixIcon, // 👈 Optional suffix icon
+    this.suffixIcon,
+    this.prefixIcon, // 👈 Optional prefix icon
   });
 
   @override
@@ -64,7 +66,14 @@ class _GlobalOutlineEditTextState extends State<GlobalOutlineEditText> {
         hintMaxLines: 1,
         hintStyle: TextStyle(fontSize: 14, color: AppColors.hintGray, fontWeight: FontWeight.w400),
 
-        // Show visibility icon only if the keyboard type is password
+        // Prefix Icon (Image or Icon)
+        prefixIcon: widget.prefixIcon != null
+            ? Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: widget.prefixIcon,
+        ) : null,
+
+        // Suffix Icon (Password Visibility or Custom)
         suffixIcon: widget.keyboardType == TextInputType.visiblePassword
             ? IconButton(
           icon: Icon(
@@ -77,7 +86,7 @@ class _GlobalOutlineEditTextState extends State<GlobalOutlineEditText> {
             });
           },
         )
-            : widget.suffixIcon, // 👈 If not a password field, use provided suffixIcon
+            : widget.suffixIcon,
       ),
       validator: widget.validator,
     );
