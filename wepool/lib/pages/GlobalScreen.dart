@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:wepool/pages/global/PublishRideScreen.dart';
 import 'package:wepool/utils/colors.dart';
 
 import '../widgets/global/BottomNavBar.dart';
-import 'global/PublishRideScreen.dart';
+import 'global/SearchRideScreen.dart';
 
 class GlobalScreen extends StatefulWidget {
   const GlobalScreen({super.key});
@@ -14,8 +15,8 @@ class GlobalScreen extends StatefulWidget {
 class _GlobalScreenState extends State<GlobalScreen> {
   int selectedIndex = 1; // Initial screen index
 
-  List<Widget> screenList = const [
-    Text("Search Screen", style: TextStyle(fontSize: 40)),
+  List<Widget> screenList =  [
+    SearchRideScreen(),
     PublishRideScreen(),
     Text("Chat Screen", style: TextStyle(fontSize: 40)),
     Text("Profile Screen", style: TextStyle(fontSize: 40)),
