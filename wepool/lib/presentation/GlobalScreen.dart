@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:wepool/pages/global/PublishRideScreen.dart';
+import 'package:wepool/presentation/pages/global/PublishRideScreen.dart';
+import 'package:wepool/presentation/pages/global/SearchRideScreen.dart';
 import 'package:wepool/utils/colors.dart';
 
 import '../widgets/global/BottomNavBar.dart';
-import 'global/SearchRideScreen.dart';
 
 class GlobalScreen extends StatefulWidget {
   const GlobalScreen({super.key});
@@ -36,4 +36,3 @@ class _GlobalScreenState extends State<GlobalScreen> {
     );
   }
 }
-

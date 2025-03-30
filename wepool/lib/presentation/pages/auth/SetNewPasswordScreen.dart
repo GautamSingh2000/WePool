@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:wepool/pages/auth/LoginScreen.dart';
+import 'package:provider/provider.dart';
 
-import '../../utils/colors.dart';
-import '../../widgets/global/GlobalOutlinEditText.dart';
-import '../../widgets/global/GlobalRoundedButton.dart';
+import '../../../utils/colors.dart';
+import '../../../widgets/global/GlobalOutlinEditText.dart';
+import '../../../widgets/global/GlobalRoundedButton.dart';
+import '../../provider/ReSetPasswordProvider.dart';
+import 'LoginScreen.dart';
 import 'SuccessMessageWidget.dart';
 
 class SetNewPasswordScreen extends StatefulWidget {
-  const SetNewPasswordScreen({super.key});
+  final String resetToken;
+  final String email;
+
+  const SetNewPasswordScreen({
+    super.key,
+    required this.resetToken,
+    required this.email,
+  });
 
   @override
   State<SetNewPasswordScreen> createState() => _SetNewPasswordScreenState();
@@ -21,7 +30,50 @@ class _SetNewPasswordScreenState extends State<SetNewPasswordScreen> {
 
   final _formKey = GlobalKey<FormState>();
 
-  bool _isSuccess = false;
+  void SetNewPassword() async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      try {
+        await Provider.of<ResetPasswordProvider>(
+          context,
+          listen: false,
+        ).resetPassword();
+
+        final resetPasswordProvider = Provider.of<ResetPasswordProvider>(
+          context,
+          listen: false,
+        );
+
+        if (resetPasswordProvider.nextScreen) {
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) => SuccessMessageWidget(
+              title: "Successful",
+              message: "Your password has been changed.",
+              btnTitle: "Login",
+              onPressed: () {
+                WidgetsBinding.instance.addPostFrameCallback((_) async {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                        (route) => false,
+                  );
+                });
+              },
+            ),
+          );
+        }
+      } catch (error) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(error.toString()),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -29,21 +81,24 @@ class _SetNewPasswordScreenState extends State<SetNewPasswordScreen> {
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
       body: SafeArea(
-        child:
-            _isSuccess
-                ? SuccessMessageWidget(
-                  // Show success message if _isSuccess is true
-                  onPressed: () {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => LoginScreen(),
-                      ),
-                          (route) => false,
-                    ); // Navigate to login
-                  },
-                )
-                : SingleChildScrollView(
+        child: Consumer<ResetPasswordProvider>(
+          builder: (context, resetPasswordProvider, child) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (resetPasswordProvider.errorMessage.isNotEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(resetPasswordProvider.errorMessage),
+                    backgroundColor: Colors.red, // Error styling
+                    duration: Duration(seconds: 3),
+                  ),
+                );
+                resetPasswordProvider
+                    .clearError(); // Clear error message after showing
+              }
+            });
+            return Stack(
+              children: [
+                SingleChildScrollView(
                   child: Container(
                     margin: EdgeInsets.fromLTRB(22, 10, 22, 0),
                     child: Form(
@@ -134,11 +189,10 @@ class _SetNewPasswordScreenState extends State<SetNewPasswordScreen> {
                             width: double.infinity,
                             child: ElevatedButton(
                               onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  // Proceed with login
-                                  setState(() {
-                                    _isSuccess = true;
-                                  });
+                                if (_formKey.currentState!.validate() && !resetPasswordProvider.isLoading) {
+                                  resetPasswordProvider.setResetToken(widget.resetToken,);
+                                  resetPasswordProvider.setEmailPassword(widget.email, _newPasswordController.text,);
+                                  SetNewPassword();
                                 }
                               },
                               style: ElevatedButton.styleFrom(
@@ -165,6 +219,20 @@ class _SetNewPasswordScreenState extends State<SetNewPasswordScreen> {
                     ),
                   ),
                 ),
+
+                if (resetPasswordProvider.isLoading)
+                  Container(
+                    color: Colors.black.withOpacity(0.3),
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        color: AppColors.primary,
+                      ),
+                    ),
+                  ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

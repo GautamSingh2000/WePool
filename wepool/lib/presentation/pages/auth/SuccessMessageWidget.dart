@@ -4,10 +4,16 @@ import 'package:lottie/lottie.dart';
 import 'package:wepool/utils/colors.dart';
 
 class SuccessMessageWidget extends StatelessWidget {
+  final String title;
+  final String message;
+  final String btnTitle;
   final VoidCallback onPressed;
 
   const SuccessMessageWidget({
     Key? key,
+    required this.title,
+    required this.message,
+    required this.btnTitle,
     required this.onPressed,
   }) : super(key: key);
 
@@ -33,10 +39,11 @@ class SuccessMessageWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             /// ✅ Success Icon
-           Lottie.asset('asset/anim/done_animation.json',repeat: true,height: 62 ,width: 62),
+            Lottie.asset('assets/anim/done_animation.json', repeat: true, height: 62, width: 62),
+
             /// 🎉 Title
             Text(
-              "Successful",
+              title,
               style: GoogleFonts.poppins(
                 fontSize: 18,
                 fontWeight: FontWeight.w500,
@@ -47,7 +54,7 @@ class SuccessMessageWidget extends StatelessWidget {
 
             /// 📜 Message
             Text(
-              "Congratulations! Your password has \n been changed. Click continue to login",
+              message,
               textAlign: TextAlign.center,
               style: GoogleFonts.poppins(
                 fontSize: 16,
@@ -69,7 +76,7 @@ class SuccessMessageWidget extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  "Login",
+                  btnTitle,
                   style: GoogleFonts.poppins(
                     fontSize: 15,
                     fontWeight: FontWeight.w600,

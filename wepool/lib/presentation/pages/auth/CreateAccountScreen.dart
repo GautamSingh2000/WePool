@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:wepool/pages/auth/LoginScreen.dart';
-import 'package:wepool/pages/auth/OnboardingScreen.dart';
+import 'package:provider/provider.dart';
 
-import '../../utils/colors.dart';
-import '../../widgets/global/GlobalOutlinEditText.dart';
+import '../../../utils/colors.dart';
+import '../../../../widgets/global/GlobalOutlinEditText.dart';
+import '../../provider/RegistrationProvider.dart';
+import 'LoginScreen.dart';
+import 'OnboardingScreen.dart';
 
 class CreateAccountScreen extends StatefulWidget {
   const CreateAccountScreen({super.key});
@@ -98,6 +100,9 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         if (value.length < 6) {
                           return "Password must be at least 6 characters";
                         }
+                        if (value.length>=15){
+                          return "Password must be less then 15 character";
+                        }
                         return null;
                       },
                     ),
@@ -113,6 +118,13 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                           // Proceed with login
                           print("Email: ${_emailController.text}");
                           print("Password: ${_passwordController.text}");
+
+                          //saving data into provider
+                          Provider.of<RegistrationProvider>(context, listen: false)
+                              .setEmailPassword(
+                            _emailController.text,
+                            _passwordController.text,
+                          );
 
                           Navigator.push(context,
                             MaterialPageRoute(

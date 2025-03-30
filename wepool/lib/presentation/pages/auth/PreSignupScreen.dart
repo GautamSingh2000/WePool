@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:wepool/utils/GetDeviceInfo.dart';
 import 'package:wepool/utils/colors.dart';
-import '../../widgets/global/HoloCircularIndicatorWithChild.dart';
+import 'package:wepool/utils/constants.dart';
+import '../../../data/models/DeviceInfoModel.dart';
+import '../../../services/HiveHelper.dart';
+import '../../../widgets/global/HoloCircularIndicatorWithChild.dart';
 import 'LoginScreen.dart';
 
 class PreSignupScreen extends StatefulWidget {
@@ -42,13 +47,31 @@ class _PreSignupScreenState extends State<PreSignupScreen> {
         });
       });
     } else {
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => LoginScreen()),
-            (route) => false,// ✅ Fix: Correct syntax
-      );
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => LoginScreen()),
+              (route) => false, // ✅ Fix: Correct syntax
+        );
+      });
     }
 
+  }
+
+  void saveDeviceData() async {
+    DeviceInfoModel deviceInfo = await getDeviceInfo();
+    HiveHelper.saveDeviceInfo(deviceInfo);
+    print("Device Info Saved!");
+    DeviceInfoModel deviceData = HiveHelper.getDeviceInfo();
+    print(deviceData.deviceId);
+    print(deviceData.deviceType);
+    print(deviceData.deviceName);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    saveDeviceData();
   }
 
   @override

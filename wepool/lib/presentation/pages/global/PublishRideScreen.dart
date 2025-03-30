@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:wepool/utils/colors.dart';
 
-import '../../widgets/global/GlobalOutlinEditText.dart';
+import '../../../widgets/global/GlobalOutlinEditText.dart';
 
 class PublishRideScreen extends StatefulWidget {
   @override

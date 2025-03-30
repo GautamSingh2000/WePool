@@ -2,11 +2,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:wepool/utils/colors.dart';
-import '../../widgets/global/GlobalRoundedButton.dart';
+import '../../../widgets/global/GlobalRoundedButton.dart';
 import 'SetNewPasswordScreen.dart';
 
 class PrePasswordResetScreen extends StatelessWidget {
-  const PrePasswordResetScreen({super.key});
+  final String resetToken;
+  final String email;
+
+  const PrePasswordResetScreen({super.key, required this.resetToken, required this.email});
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +58,7 @@ class PrePasswordResetScreen extends StatelessWidget {
               child: ElevatedButton(
                 onPressed:() {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SetNewPasswordScreen()));
+                      MaterialPageRoute(builder: (context) => SetNewPasswordScreen(resetToken: resetToken,email: email,)));
                 },
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 14),
